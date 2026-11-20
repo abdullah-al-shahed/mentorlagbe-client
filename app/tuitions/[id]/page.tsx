@@ -1,10 +1,11 @@
+import { Suspense } from "react"
 import { notFound } from "next/navigation"
 import { BadgeCheck, CalendarDays, Clock, MapPin, Monitor, Wallet } from "lucide-react"
 import { ApplyPanel } from "@/components/apply-panel"
 import { publicFetch } from "@/lib/api"
 import type { Tuition } from "@/lib/types"
 
-export default async function TuitionDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+async function TuitionContent({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   let tuition: Tuition
   try {
@@ -80,5 +81,13 @@ export default async function TuitionDetailsPage({ params }: { params: Promise<{
         </aside>
       </div>
     </div>
+  )
+}
+
+export default function TuitionDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+  return (
+    <Suspense fallback={<div className="mx-auto h-96 max-w-7xl animate-pulse rounded-2xl bg-secondary px-4 py-10" />}>
+      <TuitionContent params={params} />
+    </Suspense>
   )
 }

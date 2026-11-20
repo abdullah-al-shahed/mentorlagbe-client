@@ -7,7 +7,7 @@ import type { TuitionsResponse } from "@/lib/types"
 
 type SP = { [key: string]: string | undefined }
 
-export default async function TuitionsPage({ searchParams }: { searchParams: Promise<SP> }) {
+async function TuitionResults({ searchParams }: { searchParams: Promise<SP> }) {
   const sp = await searchParams
   const params = new URLSearchParams()
   for (const key of ["search", "subject", "classLevel", "mode", "page"]) {
@@ -21,17 +21,16 @@ export default async function TuitionsPage({ searchParams }: { searchParams: Pro
   ])
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold sm:text-4xl">Browse Tuitions</h1>
-        <p className="mt-2 text-muted-foreground">
-          {data.total} verified {data.total === 1 ? "listing" : "listings"} ready for you.
-        </p>
-      </div>
+    <>
+      <p className="mt-2 text-muted-foreground">
+        {data.total} verified {data.total === 1 ? "listing" : "listings"} ready for you.
+      </p>
 
-      <Suspense>
-        <TuitionFilters subjects={filters.subjects} classLevels={filters.classLevels} />
-      </Suspense>
+      <div className="mt-8">
+        <Suspense>
+          <TuitionFilters subjects={filters.subjects} classLevels={filters.classLevels} />
+        </Suspense>
+      </div>
 
       {data.items.length === 0 ? (
         <div className="mt-10 rounded-2xl border border-dashed bg-card p-14 text-center">
@@ -48,6 +47,27 @@ export default async function TuitionsPage({ searchParams }: { searchParams: Pro
 
       <Suspense>
         <Pagination page={data.page} totalPages={data.totalPages} />
+      </Suspense>
+    </>
+  )
+}
+
+function ResultsSkeleton() {
+  return (
+    <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div key={i} className="h-96 animate-pulse rounded-2xl bg-secondary" />
+      ))}
+    </div>
+  )
+}
+
+export default function TuitionsPage({ searchParams }: { searchParams: Promise<SP> }) {
+  return (
+    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
+      <h1 className="text-3xl font-bold sm:text-4xl">Browse Tuitions</h1>
+      <Suspense fallback={<ResultsSkeleton />}>
+        <TuitionResults searchParams={searchParams} />
       </Suspense>
     </div>
   )
