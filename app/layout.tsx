@@ -2,7 +2,8 @@ import type { Metadata } from "next"
 import { Inter, Plus_Jakarta_Sans } from "next/font/google"
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
-
+import { Navbar } from "@/components/navbar"
+import { Footer } from "@/components/footer"
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -21,7 +22,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${jakarta.variable}`}>
-      
+      <body className="flex min-h-screen flex-col antialiased">
+        <Navbar />
+        <main className="flex-1">{children}</main>
+        <Footer />
+        <Toaster richColors position="top-right" />
+      </body>
     </html>
   )
 }
