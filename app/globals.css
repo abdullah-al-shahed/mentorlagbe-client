@@ -128,3 +128,38 @@
     @apply font-sans;
   }
 }
+
+
+@theme inline {
+  --font-heading: var(--font-jakarta);
+}
+
+:root {
+  --background: #faf8f5;
+  --foreground: #1c1917;
+  --card: #ffffff;
+  --card-foreground: #1c1917;
+  --popover: #ffffff;
+  --popover-foreground: #1c1917;
+  --primary: #0f766e;
+  --primary-foreground: #ffffff;
+  --secondary: #f1ede6;
+  --secondary-foreground: #1c1917;
+  --muted: #f1ede6;
+  --muted-foreground: #57534e;
+  --accent: #fef3c7;
+  --accent-foreground: #92400e;
+  --border: #ece8e1;
+  --input: #ece8e1;
+  --ring: #0f766e;
+  --radius: 0.875rem;
+}
+
+body {
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
