@@ -11,24 +11,25 @@ type Result = { success: boolean; payment?: { planName: string; amount: number; 
 
 function SuccessContent() {
   const sessionId = useSearchParams().get("session_id")
-  const [state, setState] = useState<"loading" | "ok" | "error">("loading")
+  const [verified, setVerified] = useState<"loading" | "ok" | "error">("loading")
   const [payment, setPayment] = useState<Result["payment"]>()
   const ran = useRef(false)
 
+  // session_id না থাকলে সরাসরি error, effect লাগে না
+  const state = !sessionId ? "error" : verified
+
   useEffect(() => {
-    if (ran.current) return
+    if (!sessionId || ran.current) return
     ran.current = true
-    if (!sessionId) {
-      setState("error")
-      return
-    }
     apiFetch<Result>("/payments/verify", { method: "POST", body: JSON.stringify({ sessionId }) })
       .then((r) => {
         setPayment(r.payment)
-        setState(r.success ? "ok" : "error")
+        setVerified(r.success ? "ok" : "error")
       })
-      .catch(() => setState("error"))
+      .catch(() => setVerified("error"))
   }, [sessionId])
+
+  // নিচের if (state === "loading") ... থেকে বাকি অংশ আগের মতোই থাকবে
 
   if (state === "loading") {
     return (

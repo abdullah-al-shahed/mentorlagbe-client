@@ -1,33 +1,37 @@
-import type { Metadata } from "next"
-import { Inter, Plus_Jakarta_Sans } from "next/font/google"
-import { Toaster } from "@/components/ui/sonner"
-import "./globals.css"
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
+import type { Metadata } from "next";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
+import "./globals.css";
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
+import { Suspense } from "react";
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-jakarta",
-})
+});
 
 export const metadata: Metadata = {
   title: "MentorLagbe | Find Your Ideal Tutor",
   description: "Smart tuition and mentorship platform for students and tutors.",
-}
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${jakarta.variable}`}>
       <body className="flex min-h-screen flex-col antialiased">
-        <Navbar />
+        <Suspense fallback={<div className="h-16 border-b bg-background" />}>
+          <Navbar />
+        </Suspense>
+
         <main className="flex-1">{children}</main>
         <Footer />
         <Toaster richColors position="top-right" />
       </body>
     </html>
-  )
+  );
 }

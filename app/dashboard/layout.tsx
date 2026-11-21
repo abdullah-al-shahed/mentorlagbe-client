@@ -34,36 +34,20 @@ const MENU: Record<string, Item[]> = {
   ],
 }
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const router = useRouter()
-  const pathname = usePathname()
-  const { data: session, isPending } = useSession()
-  const [collapsed, setCollapsed] = useState(false)
-  const [mobileOpen, setMobileOpen] = useState(false)
-  const user = session?.user
+type SidebarUser = { name: string; role: string; image?: string | null }
 
-  useEffect(() => {
-    if (isPending) return
-    if (!user) {
-      router.replace("/sign-in")
-      return
-    }
-    // অন্য role এর dashboard এ ঢুকলে নিজের টায় পাঠাও
-    const section = pathname.split("/")[2]
-    if (["student", "tutor", "admin"].includes(section) && section !== user.role) {
-      router.replace(`/dashboard/${user.role}`)
-    }
-  }, [isPending, user, pathname, router])
-
-  useEffect(() => setMobileOpen(false), [pathname])
-
-  if (isPending || !user) {
-    return <div className="mx-auto mt-24 h-64 max-w-5xl animate-pulse rounded-2xl bg-secondary" />
-  }
-
-  const items = MENU[user.role] ?? MENU.student
-
-  const Nav = ({ compact }: { compact: boolean }) => (
+function SidebarNav({
+  items,
+  pathname,
+  compact,
+  onNavigate,
+}: {
+  items: Item[]
+  pathname: string
+  compact: boolean
+  onNavigate?: () => void
+}) {
+  return (
     <nav className="flex flex-col gap-1">
       {items.map(({ label, href, Icon }) => {
         const active = href === pathname || (href.split("/").length > 3 && pathname.startsWith(href))
@@ -72,6 +56,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             key={href}
             href={href}
             title={label}
+            onClick={onNavigate}
             className={cn(
               "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
               active ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-secondary hover:text-foreground",
@@ -85,8 +70,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       })}
     </nav>
   )
+}
 
-  const Profile = ({ compact }: { compact: boolean }) => (
+function SidebarProfile({ user, compact }: { user: SidebarUser; compact: boolean }) {
+  return (
     <div className={cn("mb-4 flex items-center gap-3 rounded-xl bg-secondary p-3", compact && "justify-center")}>
       {user.image ? (
         // eslint-disable-next-line @next/next/no-img-element
@@ -104,14 +91,41 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       )}
     </div>
   )
+}
+
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const router = useRouter()
+  const pathname = usePathname()
+  const { data: session, isPending } = useSession()
+  const [collapsed, setCollapsed] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const user = session?.user
+
+  useEffect(() => {
+    if (isPending) return
+    if (!user) {
+      router.replace("/sign-in")
+      return
+    }
+    const section = pathname.split("/")[2]
+    if (["student", "tutor", "admin"].includes(section) && section !== user.role) {
+      router.replace(`/dashboard/${user.role}`)
+    }
+  }, [isPending, user, pathname, router])
+
+  if (isPending || !user) {
+    return <div className="mx-auto mt-24 h-64 max-w-5xl animate-pulse rounded-2xl bg-secondary" />
+  }
+
+  const items = MENU[user.role] ?? MENU.student
 
   return (
     <div className="flex min-h-[calc(100vh-4rem)]">
       {/* Desktop sidebar */}
       <aside className={cn("hidden shrink-0 border-r bg-card p-4 transition-[width] duration-200 lg:block", collapsed ? "w-[84px]" : "w-64")}>
         <div className="sticky top-20">
-          <Profile compact={collapsed} />
-          <Nav compact={collapsed} />
+          <SidebarProfile user={user} compact={collapsed} />
+          <SidebarNav items={items} pathname={pathname} compact={collapsed} />
         </div>
       </aside>
 
@@ -123,14 +137,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <button className="mb-3 rounded-lg border p-2" onClick={() => setMobileOpen(false)} aria-label="Close sidebar">
               <X className="size-4" />
             </button>
-            <Profile compact={false} />
-            <Nav compact={false} />
+            <SidebarProfile user={user} compact={false} />
+            <SidebarNav items={items} pathname={pathname} compact={false} onNavigate={() => setMobileOpen(false)} />
           </aside>
         </div>
       )}
 
       <div className="min-w-0 flex-1">
-        {/* Top bar */}
         <div className="flex h-14 items-center gap-3 border-b bg-background px-4 sm:px-6">
           <button className="rounded-lg border p-2 lg:hidden" onClick={() => setMobileOpen(true)} aria-label="Open sidebar">
             <Menu className="size-4" />

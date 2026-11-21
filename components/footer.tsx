@@ -56,7 +56,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t py-5 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} MentorLagbe. All rights reserved.
+       © 2026 MentorLagbe. All rights reserved.
       </div>
     </footer>
   )
