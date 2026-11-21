@@ -23,3 +23,42 @@ export type TuitionsResponse = {
   page: number
   totalPages: number
 }
+
+export type Application = {
+  _id: string
+  tuitionId: string
+  tuitionTitle: string
+  subject: string
+  monthlyFee: number
+  tutorName: string
+  tutorEmail: string
+  studentName: string
+  studentEmail: string
+  studentPhone: string
+  preferredSchedule: string
+  studentNote: string
+  status: "pending" | "accepted" | "rejected"
+  appliedAt: string
+}
+
+export type Payment = {
+  _id: string
+  userEmail: string
+  userName: string
+  userRole: string
+  planName: string
+  amount: number
+  currency: string
+  transactionId: string
+  paidAt: string
+}
+
+export type AppUser = {
+  _id: string
+  name: string
+  email: string
+  role: "student" | "tutor" | "admin"
+  plan?: string
+  image?: string
+  createdAt: string
+}
