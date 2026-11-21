@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MentorLagbe
 
-## Getting Started
+Smart tuition and mentorship platform connecting students with verified tutors.
+Tutors post tuition batches, students apply and track status, admins moderate
+listings and revenue. Both roles can upgrade to Pro via Stripe.
 
-First, run the development server:
+## Live Links
+- Live site: https://mentorlagbe-client-shahed.vercel.app/
+- Server: https://mentorlagbe-server-git-main-abdullah-al-shahed.vercel.app/
+- Server repo: https://github.com/abdullah-al-shahed/mentorlagbe-server.git>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Test Credentials
+| Role | Email | Password |
+|---|---|---|
+| Admin | mdadmin@gmail.com | mdadmiN-2026 |
+| Tutor | mdtutor@gmail.com | mdtutoR-2026 |
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Key Features
+- Role-based auth (Student / Tutor / Admin) with BetterAuth and JWT
+- Browse tuitions with server-side search, filters and pagination
+- Tuition details with student-only apply form and duplicate prevention
+- Tutor dashboard: post, edit, delete, close tuitions and manage applicants
+- Admin dashboard: user roles, tuition approval, Stripe transactions
+- Free plan limit (2 tuitions) and Pro plan upgrade via Stripe Checkout
+- Image upload with ImgBB, responsive collapsible dashboard sidebar
+- Loading skeletons, custom 404 and error pages, toast notifications
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech Stack
+Next.js (App Router), TypeScript, Tailwind CSS, shadcn/ui, BetterAuth,
+Express, MongoDB, Stripe, ImgBB
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## npm Packages
+next, react, better-auth, @better-auth/mongo-adapter, mongodb, jsonwebtoken,
+stripe, @stripe/stripe-js, sonner, lucide-react, tailwindcss, shadcn/ui
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Run Locally
+1. `npm install`
+2. `npm run dev`

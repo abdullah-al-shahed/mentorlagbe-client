@@ -3,7 +3,7 @@ import { headers } from "next/headers"
 import { NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 
-// লগইন করা ইউজারের জন্য Express API-র JWT তৈরি করে
+//  ইউজারের জন্য Express API-র JWT তৈরি
 export async function GET() {
   const session = await auth.api.getSession({ headers: await headers() })
   if (!session) {
