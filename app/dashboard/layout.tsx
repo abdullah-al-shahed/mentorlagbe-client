@@ -114,8 +114,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }, [isPending, user, pathname, router])
 
   if (isPending || !user) {
-    return <div className="mx-auto mt-24 h-64 max-w-5xl animate-pulse rounded-2xl bg-secondary" />
-  }
+  return (
+    <div className="mx-auto mt-24 h-64 max-w-5xl animate-pulse rounded-2xl bg-secondary">
+      <div className="hidden">{children}</div>
+    </div>
+  )
+}
 
   const items = MENU[user.role] ?? MENU.student
 
