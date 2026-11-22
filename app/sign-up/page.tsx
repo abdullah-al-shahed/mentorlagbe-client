@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
@@ -9,7 +9,7 @@ import { AuthShell } from "@/components/auth-shell"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { signUp } from "@/lib/auth-client"
+import { signUp , useSession } from "@/lib/auth-client"
 import { cn } from "@/lib/utils"
 import { PasswordInput } from "@/components/password-input"
 
@@ -19,6 +19,11 @@ export default function SignUpPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [role, setRole] = useState<"student" | "tutor">("student")
+  const {data: session, isPending} = useSession();
+
+  useEffect(()=>{
+    if(!isPending && session) router.replace("/dashboard")
+  }, [session, isPending, router])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -43,6 +48,8 @@ export default function SignUpPage() {
     router.push("/dashboard")
     router.refresh()
   }
+
+
 
   return (
     <AuthShell title="Create your account" subtitle="Join as a student or a tutor in under a minute.">

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect,useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
@@ -8,13 +8,19 @@ import { AuthShell } from "@/components/auth-shell"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { signIn } from "@/lib/auth-client"
+import { signIn, useSession } from "@/lib/auth-client"
 import { clearApiToken } from "@/lib/api"
 import { PasswordInput } from "@/components/password-input"
 
 export default function SignInPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const {data: session, isPending}= useSession()
+
+  // is login - Go to dashboard
+  useEffect(() => {
+    if (!isPending && session) router.replace("/dashboard")
+  }, [session, isPending, router])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -37,6 +43,11 @@ export default function SignInPage() {
     router.push("/dashboard")
     router.refresh()
   }
+
+
+  if (isPending) return null
+  if (session) return null
+
 
   return (
     <AuthShell title="Welcome back" subtitle="Sign in to manage your tuitions and applications.">
