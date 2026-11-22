@@ -2,19 +2,22 @@
 
 import { CircleDollarSign, Clock, GraduationCap, Users } from "lucide-react"
 import { StatCard, StatGrid } from "@/components/dashboard/stat-card"
-import { PageTitle } from "@/components/dashboard/page-title"
+import { PageTitle, ErrorState } from "@/components/dashboard/page-title" 
 import { useApi } from "@/hooks/use-api"
 
 type Stats = { totalUsers: number; totalTutors: number; pendingTuitions: number; approvedTuitions: number; totalRevenue: number }
 
 export default function AdminOverview() {
-  const { data, loading } = useApi<Stats>("/stats/admin")
+  const { data, loading, error, reload } = useApi<Stats>("/stats/admin") 
 
   return (
     <>
       <PageTitle title="Admin Overview" subtitle="Platform statistics at a glance." />
-      {loading || !data ? (
+
+      {loading ? (
         <div className="h-28 animate-pulse rounded-2xl bg-secondary" />
+      ) : error || !data ? (
+        <ErrorState text={error ?? "Could not load platform stats"} onRetry={reload} /> 
       ) : (
         <StatGrid>
           <StatCard label="Total Users" value={data.totalUsers} Icon={Users} />

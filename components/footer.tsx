@@ -1,9 +1,6 @@
-'use client'
-
 import Link from "next/link"
 import { Mail, MapPin, Phone } from "lucide-react"
 import { Logo } from "@/components/logo"
-import { use } from "react"
 
 const XIcon = () => (
   <svg viewBox="0 0 24 24" className="size-4 fill-current" aria-hidden>

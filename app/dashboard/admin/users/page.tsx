@@ -1,7 +1,7 @@
 "use client"
 
 import { toast } from "sonner"
-import { PageTitle, TableSkeleton } from "@/components/dashboard/page-title"
+import { PageTitle, TableSkeleton, ErrorState } from "@/components/dashboard/page-title" // ✅
 import { useApi } from "@/hooks/use-api"
 import { apiFetch } from "@/lib/api"
 import { useSession } from "@/lib/auth-client"
@@ -9,7 +9,7 @@ import type { AppUser } from "@/lib/types"
 
 export default function AdminUsersPage() {
   const { data: session } = useSession()
-  const { data, loading, reload } = useApi<AppUser[]>("/users")
+  const { data, loading, error, reload } = useApi<AppUser[]>("/users") // ✅
 
   const changeRole = async (id: string, role: string) => {
     try {
@@ -24,8 +24,11 @@ export default function AdminUsersPage() {
   return (
     <>
       <PageTitle title="User Management" subtitle="Manage roles of all registered users." />
-      {loading || !data ? (
+
+      {loading ? (
         <TableSkeleton />
+      ) : error || !data ? (
+        <ErrorState text={error ?? "Could not load users"} onRetry={reload} /> // ✅
       ) : (
         <div className="overflow-x-auto rounded-2xl border bg-card">
           <table className="w-full min-w-[720px] text-left text-sm">

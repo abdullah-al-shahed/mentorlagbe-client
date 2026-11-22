@@ -1,4 +1,4 @@
-# MentorLagbe
+# MentorLagbe Client
 
 Smart tuition and mentorship platform connecting students with verified tutors.
 Tutors post tuition batches, students apply and track status, admins moderate
@@ -6,8 +6,9 @@ listings and revenue. Both roles can upgrade to Pro via Stripe.
 
 ## Live Links
 - Live site: https://mentorlagbe-client-shahed.vercel.app/
-- Server: https://mentorlagbe-server-git-main-abdullah-al-shahed.vercel.app/
-- Server repo: https://github.com/abdullah-al-shahed/mentorlagbe-server.git>
+- Live API: https://mentorlagbe-server-shahed.vercel.app/
+- Client repo: https://github.com/abdullah-al-shahed/mentorlagbe-client
+- Server repo: https://github.com/abdullah-al-shahed/mentorlagbe-server
 
 ## Test Credentials
 | Role | Email | Password |
@@ -23,7 +24,7 @@ listings and revenue. Both roles can upgrade to Pro via Stripe.
 - Admin dashboard: user roles, tuition approval, Stripe transactions
 - Free plan limit (2 tuitions) and Pro plan upgrade via Stripe Checkout
 - Image upload with ImgBB, responsive collapsible dashboard sidebar
-- Loading skeletons, custom 404 and error pages, toast notifications
+- Loading skeletons, error states with retry, custom 404 and error pages, toast notifications
 
 ## Tech Stack
 Next.js (App Router), TypeScript, Tailwind CSS, shadcn/ui, BetterAuth,
@@ -35,4 +36,5 @@ stripe, @stripe/stripe-js, sonner, lucide-react, tailwindcss, shadcn/ui
 
 ## Run Locally
 1. `npm install`
-2. `npm run dev`
+2. Copy `.env.example` to `.env.local` and fill in the values
+3. `npm run dev`
