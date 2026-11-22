@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { signIn } from "@/lib/auth-client"
 import { clearApiToken } from "@/lib/api"
+import { PasswordInput } from "@/components/password-input"
 
 export default function SignInPage() {
   const router = useRouter()
@@ -46,7 +47,7 @@ export default function SignInPage() {
         </div>
         <div className="space-y-2">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" name="password" type="password" placeholder="Your password" required />
+          <PasswordInput id="password" name="password" type="password" placeholder="Your password" required />
         </div>
         <Button type="submit" className="h-11 w-full" disabled={loading}>
           {loading ? "Signing in..." : "Sign In"}

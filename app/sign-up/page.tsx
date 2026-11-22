@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { signUp } from "@/lib/auth-client"
 import { cn } from "@/lib/utils"
+import { PasswordInput } from "@/components/password-input"
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -79,7 +80,7 @@ export default function SignUpPage() {
         </div>
         <div className="space-y-2">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" name="password" type="password" placeholder="At least 8 characters" required />
+          <PasswordInput id="password" name="password" type="password" placeholder="At least 8 characters" required />
         </div>
 
         <Button type="submit" className="h-11 w-full" disabled={loading}>
