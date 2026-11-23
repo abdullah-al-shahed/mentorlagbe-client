@@ -134,7 +134,30 @@
   --font-heading: var(--font-jakarta);
 }
 
+
 :root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #4338ca;
+  --primary-foreground: #ffffff;
+  --secondary: #eef2ff;
+  --secondary-foreground: #312e81;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #e0e7ff;
+  --accent-foreground: #3730a3;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #4338ca;
+  --radius: 0.75rem;
+}
+
+
+/* :root {
   --background: #faf8f5;
   --foreground: #1c1917;
   --card: #ffffff;
@@ -153,7 +176,7 @@
   --input: #ece8e1;
   --ring: #0f766e;
   --radius: 0.875rem;
-}
+} */
 
 body {
   font-family: var(--font-inter), system-ui, sans-serif;
